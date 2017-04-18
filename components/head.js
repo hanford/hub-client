@@ -25,6 +25,36 @@ export const Head = (props) => (
       <meta property="og:image" content={props.ogImage || defaultOGImage} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
+
+      <style dangerouslySetInnerHTML={{__html: `
+        html,
+        body,
+        #__next {
+          font-family: -apple-system,BlinkMacSystemFont,Avenir Next,Avenir,Helvetica,sans-serif;
+          height: 100%;
+          width: 100%;
+          overflow: auto;
+          margin: 0;
+          padding: 0;
+          font-size: 10px;
+          color: white;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        [data-reactroot] {
+          font-size: 1.6rem;
+          height: 100%;
+        }
+
+        @media(max-width: 767px) {
+          [data-reactroot] {
+            font-size: 1.4rem;
+          }
+        }
+      `}} />
     </NextHead>
   </div>
 )
