@@ -15,7 +15,7 @@ const ssrCache = new LRUCache({
 })
 const cachedRoutes = [
   '/',
-  '/topics/:topicId'
+  '/schedule'
 ]
 
 function renderAndCache (req, res, pagePath, queryParams) {

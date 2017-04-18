@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
-export const ScheduleButton = () => (
+export const FabButton = () => (
   <div>
-    <Link href='about' prefetch>
+    <Link href='schedule' prefetch>
       <div className='fab'>&rarr;</div>
     </Link>
     <style jsx>{`
@@ -23,18 +23,24 @@ export const ScheduleButton = () => (
         justify-content: center;
         font-size: 2.4rem;
         font-weight: 600;
+        transition: all 0.2s linear;
+        animation: scaleIn 0.25s linear;
       }
 
-      @media(max-width: 767px) {
-        .fab {
-          width: 100%;
-          border-radius: 0;
-          bottom: 0;
-          right: 0;
+      .fab:active {
+        transform: scale(0.9);
+      }
+
+      @keyframes scaleIn {
+        from {
+          transform: scale(0);
+        }
+        to {
+          transform: scale(1);
         }
       }
     `}</style>
   </div>
 )
 
-export default ScheduleButton
+export default FabButton

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import Link from 'next/link'
-import { Head, Item, ScheduleButton } from '../components'
+import { Head, Item, FabButton } from '../components'
 
 export default class PackageList extends PureComponent {
 
@@ -17,11 +17,11 @@ export default class PackageList extends PureComponent {
     const { packages } = this.props
 
     return (
-      <div>
+      <div className='container'>
         <Head title='Home' />
 
         <div className='hero'>
-          <h1 className='title'>doorman</h1>
+          <h1 className='title'>Doorweb</h1>
           <div className='list'>
             {
               packages
@@ -30,17 +30,25 @@ export default class PackageList extends PureComponent {
           </div>
         </div>
 
-        <ScheduleButton />
+        <FabButton />
 
         <style jsx>{`
+          .container {
+            height: 100%;
+            width: 100%;
+          }
+
           .hero {
             width: 100%;
+            height: 100%;
             color: #333;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
           }
 
           .title {
             width: 100%;
-            padding: 2rem 0;
+            padding: 1rem 0;
             line-height: 1.15;
             font-size: 2.8rem;
             text-align: center;
@@ -52,6 +60,7 @@ export default class PackageList extends PureComponent {
             margin: 2rem auto;
             box-shadow: 0 0 1rem #ccc;
             border-radius: 0.4rem;
+            overflow: hidden;
           }
         `}</style>
       </div>
