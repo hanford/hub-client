@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import Link from 'next/link'
-import { Head, Nav, Item } from '../components'
+import { Head, Item, ScheduleButton } from '../components'
 
 export default class PackageList extends PureComponent {
 
@@ -19,10 +19,9 @@ export default class PackageList extends PureComponent {
     return (
       <div>
         <Head title='Home' />
-        <Nav />
 
         <div className='hero'>
-          <h1 className='title'>Doorman</h1>
+          <h1 className='title'>doorman</h1>
           <div className='list'>
             {
               packages
@@ -30,6 +29,8 @@ export default class PackageList extends PureComponent {
             }
           </div>
         </div>
+
+        <ScheduleButton />
 
         <style jsx>{`
           .hero {
@@ -41,7 +42,7 @@ export default class PackageList extends PureComponent {
             width: 100%;
             padding: 2rem 0;
             line-height: 1.15;
-            font-size: 3.2rem;
+            font-size: 2.8rem;
             text-align: center;
           }
 

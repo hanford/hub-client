@@ -1,7 +1,7 @@
 import 'isomorphic-fetch'
 import { Component } from 'react'
 import Link from 'next/link'
-import { Head, Nav } from '../components'
+import { Head } from '../components'
 
 export default class About extends Component {
   static async getInitialProps() {
@@ -23,7 +23,6 @@ export default class About extends Component {
     return (
       <div>
         <Head title="About" />
-        <Nav />
 
         <div className="hero">
           <h1 className="title">Who made Next?</h1>

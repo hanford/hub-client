@@ -33,6 +33,7 @@ export class Item extends PureComponent {
             <div className='description'>
               <div>{`${item.description} from ${item.sender_description}`}</div>
               <div>{date} between {item.delivery_schedule.deliver_time_begin % 12} - {item.delivery_schedule.deliver_time_end % 12} pm</div>
+              <div>Package Size: {item.package_size}</div>
               <div>{item.retailer_logo_url ? <img src={item.retailer_logo_url} className='retailer-logo' /> : null}</div>
             </div>
 
