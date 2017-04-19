@@ -49,7 +49,7 @@ export default class About extends PureComponent {
 
     this.setState(() => {
       return {
-        dates: value
+        date: value
       }
     })
   }
@@ -59,18 +59,19 @@ export default class About extends PureComponent {
 
     this.setState(() => {
       return {
-        times: value
+        time: value
       }
     })
   }
 
-  submit = async () => {
-    let { times, dates } = this.state
+  submit = () => {
+    let { time, date } = this.state
 
-    times = times ? times : this.props.times[0]
-    dates = dates ? dates : this.props.dates[0]
+    time = time ? time : this.props.times[0]
+    date = date ? date : this.props.dates[0]
 
-    const reqData = Object.assign({}, {data: {times, dates}}, reqOpts)
+    const reqData = Object.assign({}, {data: {time, date}}, reqOpts)
+    console.log(reqData)
 
     return post('http://localhost:3000/doorman/schedule', reqData)
       .then(res => Router.push({pathname: '/finish', query: { error: false }}))

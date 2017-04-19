@@ -16,7 +16,6 @@ assert(process.env.DOORMAN_API_KEY, 'DOORMAN_API_KEY env var required')
 
 server.use(basicAuth(process.env.HUB_USER, process.env.HUB_PASSWORD))
 server.use(bodyParser('json'))
-
 server.use('/doorman', api)
 server.use(render)
 

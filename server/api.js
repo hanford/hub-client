@@ -28,30 +28,39 @@ server.get('/packages', (req, res) => {
 server.post('/schedule', (req, res) => {
   let firstpkg = pkg[0]
 
+  const { time, date } = req.body.data
+
   if (pkg.length === 0 || firstpkg.state === 'delivered') {
     return res.status(500).send('Sorry no packages to schedule')
+  }
+
+  if (!date || !time) {
+    return res.status(500).send(`Missing time or date (time: ${time} date: ${date})`)
   }
 
   const data = {
     delivery_schedule: {
       address_id: 1371,
-      deliver_on: req.body.dates,
-      deliver_time_begin: req.body.times,
+      deliver_on: date,
+      deliver_time_begin: Number(time) + 12,
       package_id: firstpkg.id
     }
   }
 
-  return request.post('https://app.doorman.co/app/v1/schedule', {
+  console.log(data)
+
+  return request.post({
+    url: 'https://app.doorman.co/app/v1/delivery_schedules',
+    form: data,
     headers: {
       'X-DOORMAN-AUTH-TOKEN': process.env.DOORMAN_API_KEY
-    },
-    form: data
+    }
   }, (err, response, body) => {
     if (err) {
       return res.status(500).send('Doorman server error')
     }
 
-    return res.send(body)
+    return res.json(body)
   })
 })
 

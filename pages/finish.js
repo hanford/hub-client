@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Head } from '../components'
 
 export default ({ url }) => {
-  const hasError = url.query.error
+  const hasError = url.query.error === false
   const errMsg = url.query.message
 
   return (
