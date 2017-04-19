@@ -1,6 +1,13 @@
 import React, { PureComponent } from 'react'
 import Link from 'next/link'
 import { Head, Button } from '../components'
+import { post } from 'axios'
+
+const username = process.env.HUB_USER || ''
+const password = process.env.HUB_PASSWORD || ''
+
+const isClientSide = typeof window !== 'undefined'
+const reqOpts = isClientSide ? { withCredentials: true } : { auth: { username, password } }
 
 export default class About extends PureComponent {
 
@@ -22,23 +29,52 @@ export default class About extends PureComponent {
     }
   }
 
+  constructor () {
+    super()
+
+    this.state = {
+      dates: null,
+      times: null
+    }
+  }
+
   saveDate = ({ target }) => {
     const { value } = target
-    console.log('saveDate', value)
+
+    this.setState(() => {
+      return {
+        dates: value
+      }
+    })
   }
 
   saveTime = ({ target }) => {
     const { value } = target
-    console.log('saveTime', value)
+
+    this.setState(() => {
+      return {
+        times: value
+      }
+    })
+  }
+
+  submit = () => {
+    let { times, dates } = this.state
+
+    times = times ? times : this.props.times[0]
+    dates = dates ? dates : this.props.dates[0]
+
+    const data = Object.assign({}, {data: {times, dates}}, reqOpts)
+
+    post('http://localhost:3000/doorman/schedule', data)
   }
 
   render () {
     const { times, dates } = this.props
-    console.log(times, dates)
 
     return (
       <div className='container'>
-        <Head title='About' />
+        <Head title='Schedule' />
 
         <div className='hero'>
           <div className='title'>Schedule</div>
@@ -53,13 +89,15 @@ export default class About extends PureComponent {
 
           <select onChange={this.saveTime}>
             {
-              times.map((v, index) => <option key={index} value={v}>{v}</option>)
+              times.map((v, index) => <option key={index} value={v}>{`${v}pm - ${v + 2}pm`}</option>)
             }
           </select>
 
           <br />
 
-          <Button />
+          <div onClick={this.submit}>
+            <Button />
+          </div>
         </div>
 
         <style jsx>{`
@@ -94,6 +132,8 @@ export default class About extends PureComponent {
           select {
             font-size: 1.6rem;
             width: 15rem;
+            cursor: pointer;
+            height: 4rem;
           }
         `}</style>
       </div>

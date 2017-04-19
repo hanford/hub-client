@@ -1,15 +1,21 @@
 import React, { PureComponent } from 'react'
 import Link from 'next/link'
 import { Head, Item, FabButton } from '../components'
+import { get } from 'axios'
+
+const isClientSide = typeof window !== 'undefined'
 
 export default class PackageList extends PureComponent {
 
   static async getInitialProps () {
-    let packages = new Array(16)
-      .fill(testItem)
+    const username = process.env.HUB_USER || ''
+    const password = process.env.HUB_PASSWORD || ''
+
+    const reqOpts = isClientSide ? { withCredentials: true } : { auth: { username, password } }
+    const { data  } = await get('http://localhost:3000/doorman/packages', reqOpts)
 
     return {
-      packages
+      packages: data.packages
     }
   }
 
@@ -65,30 +71,5 @@ export default class PackageList extends PureComponent {
         `}</style>
       </div>
     )
-  }
-}
-
-let testItem = {
-  "id": 310600,
-  "description": "Package",
-  "state": "scheduled",
-  "courier_name": "UPS",
-  "sender_description": "Package",
-  "delivery_id": 135280,
-  "created_by": "fast_logger",
-  "package_size": "medium",
-  "depot_id": 6,
-  "shipping_label_image_url": "https://placehold.it/150x150",
-  "depot_arrival_at": 1492467017,
-  "alcohol": false,
-  "adult_signature": false,
-  "courier_logo_url": "https://placehold.it/150x150",
-  "perishable": false,
-  "delivery_schedule": {
-    "id": 202786,
-    "deliver_on": "2017-04-18",
-    "created_by": "user",
-    "deliver_time_begin": 22,
-    "deliver_time_end": 23
   }
 }

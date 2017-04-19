@@ -6,6 +6,7 @@
     "ap": "~0.2.0",
     "axios": "~0.16.1",
     "basic-auth-connect": "~1.0.0",
+    "body-parser": "~1.17.1",
     "circular-dependency-plugin": "2.0.0",
     "debug": "2.6.3",
     "express": "4.15.2",
@@ -14,7 +15,8 @@
     "next": "2.0.1",
     "ngrok": "2.2.6",
     "react": "~15.5.4",
-    "react-dom": "~15.5.4"
+    "react-dom": "~15.5.4",
+    "xhr": "~2.4.0"
   },
   "devDependencies": {
     "next-scripts": "0.3.4"

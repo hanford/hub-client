@@ -22,7 +22,15 @@ export class Item extends PureComponent {
   render () {
     const { item } = this.props
 
-    const date = moment(item.delivery_schedule.deliver_on).calendar(Date.now())
+    if (!item.delivery_schedule) {
+      item.delivery_schedule = {}
+    }
+
+    let date = null
+
+    if (item.delivery_schedule) {
+      date = moment(item.delivery_schedule.deliver_on).calendar(Date.now())
+    }
 
     return (
       <div>
@@ -32,13 +40,18 @@ export class Item extends PureComponent {
 
             <div className='description'>
               <div>{`${item.description} from ${item.sender_description}`}</div>
-              <div>{date} between {item.delivery_schedule.deliver_time_begin % 12} - {item.delivery_schedule.deliver_time_end % 12} pm</div>
               <div>Package Size: {item.package_size}</div>
-              <div>{item.retailer_logo_url ? <img src={item.retailer_logo_url} className='retailer-logo' /> : null}</div>
+              <div>
+                {
+                  item.delivery_schedule.deliver_time_begin
+                  ? `Scheduled ${date} between ${item.delivery_schedule.deliver_time_begin % 12} - ${item.delivery_schedule.deliver_time_end % 12} pm`
+                  : null
+                }
+              </div>
             </div>
 
           </div>
-          <div className='state-label' style={{color: item.state === 'deliveried' ? '#4caa51' : '#fec804'}}>{item.state}</div>
+          <div className='state-label' style={{color: item.state === 'delivered' ? '#4caa51' : '#fec804'}}>{item.state}</div>
         </div>
 
         <style jsx>{`
@@ -87,12 +100,6 @@ export class Item extends PureComponent {
             position: absolute;
             top: 1rem;
             right: 1rem;
-          }
-
-          .retailer-logo {
-            max-width: 100%;
-            width: 2rem;
-            margin-left: 1rem;
           }
         `}</style>
       </div>

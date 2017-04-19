@@ -26,14 +26,6 @@ function renderAndCache (req, res, pagePath, queryParams) {
     return
   }
 
-  // TODO: automagically render into `/one` w/ params or leave to be opt-in
-  if (req.params && req.params.topicId) {
-    pagePath = '/topics/one'
-    queryParams = {
-      id: req.params.topicId
-    }
-  }
-
   // If not let's render the page into HTML
   app.renderToHTML(req, res, pagePath, queryParams)
     .then((html) => {
