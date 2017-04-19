@@ -6,5 +6,5 @@ Fetch packages via [Doormans](https://www.doorman.co/) private iOS API ... from 
 
 ```sh
 $ yarn install
-$ HUB_USER=... HUB_PASSWORD=... yarn dev
+$ HUB_USER=... HUB_PASSWORD=... DOORMAN_API_KEY=... yarn dev
 ```
