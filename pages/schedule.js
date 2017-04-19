@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react'
 import Link from 'next/link'
+import Router from 'next/router'
 import { Head, Button } from '../components'
-import { post } from 'axios'
+import { post, get } from 'axios'
 
 const username = process.env.HUB_USER || ''
 const password = process.env.HUB_PASSWORD || ''
@@ -38,6 +39,11 @@ export default class About extends PureComponent {
     }
   }
 
+  componentDidMount () {
+    // we need the packages if we come directly to /schedule
+    get('http://localhost:3000/doorman/packages', reqOpts)
+  }
+
   saveDate = ({ target }) => {
     const { value } = target
 
@@ -58,15 +64,21 @@ export default class About extends PureComponent {
     })
   }
 
-  submit = () => {
+  submit = async () => {
     let { times, dates } = this.state
 
     times = times ? times : this.props.times[0]
     dates = dates ? dates : this.props.dates[0]
 
-    const data = Object.assign({}, {data: {times, dates}}, reqOpts)
+    const reqData = Object.assign({}, {data: {times, dates}}, reqOpts)
 
-    post('http://localhost:3000/doorman/schedule', data)
+    return post('http://localhost:3000/doorman/schedule', reqData)
+      .then(res => Router.push({pathname: '/finish', query: { error: false }}))
+      .catch(err => {
+        console.log(err.response.data)
+        Router.push({pathname: '/finish', query: { error: true, message: err.response.data }})
+      })
+
   }
 
   render () {

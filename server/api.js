@@ -1,5 +1,5 @@
 const { get } = require('axios')
-const request = require('xhr')
+const request = require('request')
 const express = require('express')
 
 const server = express()
@@ -14,7 +14,6 @@ server.get('/packages', (req, res) => {
   })
   .then(r => r.data)
   .then(data => {
-    console.log('DATA!!', data)
 
     pkg = data.packages
 
@@ -29,6 +28,10 @@ server.get('/packages', (req, res) => {
 server.post('/schedule', (req, res) => {
   let firstpkg = pkg[0]
 
+  if (pkg.length === 0 || firstpkg.state === 'delivered') {
+    return res.status(500).send('Sorry no packages to schedule')
+  }
+
   const data = {
     delivery_schedule: {
       address_id: 1371,
@@ -40,21 +43,16 @@ server.post('/schedule', (req, res) => {
 
   return request.post('https://app.doorman.co/app/v1/schedule', {
     headers: {
-      'X-DOORMAN-AUTH-TOKEN': process.env.DOORMAN_API_KEY,
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'X-DOORMAN-AUTH-TOKEN': process.env.DOORMAN_API_KEY
     },
-    body: data
-  }, (err, response) => {
+    form: data
+  }, (err, response, body) => {
     if (err) {
-      return res.sendStatus(500)
+      return res.status(500).send('Doorman server error')
     }
 
-    const data = response.data
-
-    return res.json(data)
+    return res.send(body)
   })
-
-  // return res.json(data)
 })
 
 module.exports = server

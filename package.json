@@ -16,7 +16,7 @@
     "ngrok": "2.2.6",
     "react": "~15.5.4",
     "react-dom": "~15.5.4",
-    "xhr": "~2.4.0"
+    "request": "~2.60.0"
   },
   "devDependencies": {
     "next-scripts": "0.3.4"

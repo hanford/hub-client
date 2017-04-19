@@ -36,7 +36,7 @@ export class Item extends PureComponent {
       <div>
         <div className='item' onClick={partial(this.log, item)}>
           <div className='first-col'>
-            <a href={item.shipping_label_image_url} target='_blank'><img src={item.shipping_label_image_url} className='photoOfPackage' /></a>
+            <a href={item.shipping_label_image_url}><img src={item.shipping_label_image_url} className='photoOfPackage' /></a>
 
             <div className='description'>
               <div>{`${item.description} from ${item.sender_description}`}</div>

@@ -25,6 +25,7 @@ export const FabButton = () => (
         font-weight: 500;
         transition: all 0.2s linear;
         animation: scaleIn 0.25s linear;
+        color: white;
       }
 
       .fab:active {
